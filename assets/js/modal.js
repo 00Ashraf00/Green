@@ -3,7 +3,7 @@ function openFormModal() {
   const modal = document.getElementById("formModalOverlay");
   const iframe = document.getElementById("formIframe");
 
-  iframe.src = "/Green Dentistry/index2.html"; // your form file
+  iframe.src = "index2.html"; // your form file
   modal.style.display = "flex";
 
   // Prevent scrolling on background
@@ -48,3 +48,4 @@ window.addEventListener('message', function (ev) {
     console.log('message listener error', err);
   }
 });
+
