@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Waste Reduction Calculator</title>
+    <link rel="stylesheet" href="style-calc.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+
+  <body>
+    <main class="container">
+      <header class="hero">
+        <h1>Waste Reduction Calculator</h1>
+        <p class="lead">Estimate total clinical waste based on material type and usage frequency. No physical weighing
+          required.</p>
+      </header>
+
+      <section class="card layout-grid">
+        <!-- Two-column responsive layout: left = form, right = results (visible on desktop)
+             On mobile the right column becomes a sticky bottom bar (see CSS/JS) -->
+        <div class="form-column">
+          <div class="row">
+            <div class="col form-col">
+              <div class="field">
+                <label for="period">Period</label>
+                <select id="period">
+                  <option value="daily" selected>Daily</option>
+                  <option value="weekly">Weekly</option>
+                  <option value="monthly">Monthly</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="patients">Patients in selected period</label>
+                <input id="patients" type="number" min="0" step="1" value="0">
+              </div>
+
+              <h3 class="section-title">Material Usage</h3>
+
+              <div class="grid">
+                <div class="grid-item">
+                  <label>Nitrile Gloves</label>
+                  <div class="input-row">
+                    <input id="gloves" type="number" min="0" step="1" value="0" />
+                    <select id="glovesScope" class="scope-select">
+                      <option value="per_patient" selected>per patient</option>
+                      <option value="per_period">per period</option>
+                    </select>
+                  </div>
+                  <small class="muted">0.0035 kg / glove</small>
+                </div>
+
+                <div class="grid-item">
+                  <label>Surgical Masks</label>
+                  <div class="input-row">
+                    <input id="masks" type="number" min="0" step="1" value="0" />
+                    <select id="masksScope" class="scope-select">
+                      <option value="per_patient" selected>per patient</option>
+                      <option value="per_period">per period</option>
+                    </select>
+                  </div>
+                  <small class="muted">0.002 kg / mask</small>
+                </div>
+
+                <div class="grid-item">
+                  <label>Plastic Cups</label>
+                  <div class="input-row">
+                    <input id="cups" type="number" min="0" step="1" value="0" />
+                    <select id="cupsScope" class="scope-select">
+                      <option value="per_patient" selected>per patient</option>
+                      <option value="per_period">per period</option>
+                    </select>
+                  </div>
+                  <small class="muted">0.004 kg / cup</small>
+                </div>
+
+                <div class="grid-item">
+                  <label>Syringes (no needle)</label>
+                  <div class="input-row">
+                    <input id="syringes" type="number" min="0" step="1" value="0" />
+                    <select id="syringesScope" class="scope-select">
+                      <option value="per_patient" selected>per patient</option>
+                      <option value="per_period">per period</option>
+                    </select>
+                  </div>
+                  <small class="muted">0.006 kg / syringe</small>
+                </div>
+
+                <div class="grid-item">
+                  <label>Impression Material</label>
+                  <div class="input-row">
+                    <input id="impressionMaterial" type="number" min="0" step="1" value="0" />
+                    <select id="impressionMaterialScope" class="scope-select">
+                      <option value="per_patient" selected>per patient</option>
+                      <option value="per_period">per period</option>
+                    </select>
+                  </div>
+                  <small class="muted">0.1 kg / impression</small>
+                </div>
+
+                <div class="grid-item">
+                  <label>Chemical Bottles</label>
+                  <div class="input-row">
+                    <input id="chemicalBottle" type="number" min="0" step="1" value="0" />
+                    <select id="chemicalBottleScope" class="scope-select">
+                      <option value="per_patient" selected>per patient</option>
+                      <option value="per_period">per period</option>
+                    </select>
+                  </div>
+                  <small class="muted">0.05 kg / bottle</small>
+                </div>
+
+                <div class="grid-item">
+                  <label>Sharps</label>
+                  <div class="input-row">
+                    <input id="sharps" type="number" min="0" step="1" value="0" />
+                    <select id="sharpsScope" class="scope-select">
+                      <option value="per_patient" selected>per patient</option>
+                      <option value="per_period">per period</option>
+                    </select>
+                  </div>
+                  <small class="muted">0.003 kg / item</small>
+                </div>
+
+                <div class="grid-item">
+                  <label>Disposable Gowns</label>
+                  <div class="input-row">
+                    <input id="gowns" type="number" min="0" step="1" value="0" />
+                    <select id="gownsScope" class="scope-select">
+                      <option value="per_patient" selected>per patient</option>
+                      <option value="per_period">per period</option>
+                    </select>
+                  </div>
+                  <small class="muted">0.015 kg / gown</small>
+                </div>
+
+                <div class="grid-item">
+                  <label>Head Caps</label>
+                  <div class="input-row">
+                    <input id="headCaps" type="number" min="0" step="1" value="0" />
+                    <select id="headCapsScope" class="scope-select">
+                      <option value="per_patient" selected>per patient</option>
+                      <option value="per_period">per period</option>
+                    </select>
+                  </div>
+                  <small class="muted">0.002 kg / cap</small>
+                </div>
+
+                <div class="grid-item">
+                  <label>Shoe Covers</label>
+                  <div class="input-row">
+                    <input id="shoeCovers" type="number" min="0" step="1" value="0" />
+                    <select id="shoeCoversScope" class="scope-select">
+                      <option value="per_patient" selected>per patient</option>
+                      <option value="per_period">per period</option>
+                    </select>
+                  </div>
+                  <small class="muted">0.006 kg / cover</small>
+                </div>
+
+                <div class="grid-item">
+                  <label>Surface Barriers</label>
+                  <div class="input-row">
+                    <input id="surfaceBarriers" type="number" min="0" step="1" value="0" />
+                    <select id="surfaceBarriersScope" class="scope-select">
+                      <option value="per_patient" selected>per patient</option>
+                      <option value="per_period">per period</option>
+                    </select>
+                  </div>
+                  <small class="muted">0.003 kg / barrier</small>
+                </div>
+
+                <div class="grid-item">
+                  <label>Cotton Rolls</label>
+                  <div class="input-row">
+                    <input id="cottonRolls" type="number" min="0" step="1" value="0" />
+                    <select id="cottonRollsScope" class="scope-select">
+                      <option value="per_patient" selected>per patient</option>
+                      <option value="per_period">per period</option>
+                    </select>
+                  </div>
+                  <small class="muted">0.001 kg / roll</small>
+                </div>
+
+                <div class="grid-item">
+                  <label>Gauze Pads</label>
+                  <div class="input-row">
+                    <input id="gauzePads" type="number" min="0" step="1" value="0" />
+                    <select id="gauzePadsScope" class="scope-select">
+                      <option value="per_patient" selected>per patient</option>
+                      <option value="per_period">per period</option>
+                    </select>
+                  </div>
+                  <small class="muted">0.0015 kg / pad</small>
+                </div>
+
+                <div class="grid-item">
+                  <label>Saliva Ejectors</label>
+                  <div class="input-row">
+                    <input id="salivaEjectors" type="number" min="0" step="1" value="0" />
+                    <select id="salivaEjectorsScope" class="scope-select">
+                      <option value="per_patient" selected>per patient</option>
+                      <option value="per_period">per period</option>
+                    </select>
+                  </div>
+                  <small class="muted">0.004 kg / ejector</small>
+                </div>
+
+                <div class="grid-item">
+                  <label>Air-Water Syringe Tips</label>
+                  <div class="input-row">
+                    <input id="syringeTips" type="number" min="0" step="1" value="0" />
+                    <select id="syringeTipsScope" class="scope-select">
+                      <option value="per_patient" selected>per patient</option>
+                      <option value="per_period">per period</option>
+                    </select>
+                  </div>
+                  <small class="muted">0.003 kg / tip</small>
+                </div>
+
+                <div class="grid-item">
+                  <label>Sterilization Pouches</label>
+                  <div class="input-row">
+                    <input id="sterilizationPouches" type="number" min="0" step="1" value="0" />
+                    <select id="sterilizationPouchesScope" class="scope-select">
+                      <option value="per_patient" selected>per patient</option>
+                      <option value="per_period">per period</option>
+                    </select>
+                  </div>
+                  <small class="muted">0.008 kg / pouch</small>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="results-panel" id="resultsPanel">
+          <aside class="col results-col">
+            <div class="results card-sub">
+              <h3>Results & Insights</h3>
+
+              <div class="result-row"><span>Total waste <small id="resultPeriodLabel">/month</small> (kg)</span><strong
+                  id="totalWaste">0.000</strong></div>
+              <div class="result-row"><span>Recyclable waste <small id="resultPeriodLabel2">/month</small>
+                  (kg)</span><strong id="recyclableWaste">0.000</strong></div>
+              <div class="result-row"><span>Clinical/Medical waste <small id="resultPeriodLabel3">/month</small>
+                  (kg)</span><strong id="medicalWaste">0.000</strong></div>
+              <div class="result-row"><span>Waste per patient <small id="resultPeriodLabel4">/month</small>
+                  (kg)</span><strong id="wastePerPatient">0.000</strong></div>
+
+              <div id="benchmark" class="benchmark">
+                <span id="benchmarkLabel" class="badge neutral">-</span>
+                <p id="benchmarkText" class="muted small">Benchmark status</p>
+              </div>
+
+              <div id="insightsWrap"
+                style="display:none; margin-top: 16px; padding-top: 12px; border-top: 1px dashed #eef2e9;">
+                <h4
+                  style="margin: 0 0 12px 0; font-size: 1rem; color: #0b1220; font-weight: 700; display: flex; align-items: center; gap: 6px;">
+                  <span style="font-size: 1.2rem;">📈</span> Top Material Consumption
+                </h4>
+                <canvas id="materialChart" style="max-height: 200px; margin: 12px 0;"></canvas>
+                <div id="insightsText"
+                  style="font-size: 0.9rem; color: #0b1220; line-height: 1.5; text-align: left; margin-top: 8px;">
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- Mobile sticky summary -->
+      <div id="stickyResults" class="sticky-results" aria-hidden="true">
+        <div class="sticky-summary">
+          <div class="sticky-left">
+            <div class="small">Total</div>
+            <div id="stickyTotal" class="sticky-value">0.000 kg</div>
+          </div>
+          <div class="sticky-center">
+            <button id="stickyToggle" class="btn small">Details</button>
+          </div>
+          <div class="sticky-right">
+            <div class="small">Per patient</div>
+            <div id="stickyPer" class="sticky-value">0.000 kg</div>
+          </div>
+        </div>
+        <div id="stickyExpanded" class="sticky-expanded" style="display:none;">
+          <div>Recyclable: <strong id="stickyRecyclable">0.000</strong> kg</div>
+          <div>Clinical: <strong id="stickyMedical">0.000</strong> kg</div>
+          <div id="stickyBenchmark" style="margin-top:6px;"></div>
+
+          <div style="margin-top:12px; padding-top: 12px; border-top: 1px dashed #eef2e9;">
+            <h4
+              style="margin:6px 0 8px 0;font-size:0.95rem;color:#0b1220; display: flex; align-items: center; gap: 4px;">
+              <span>📈</span> Top Material Consumption
+            </h4>
+            <canvas id="stickyMaterialChart" style="max-height: 150px; margin: 8px 0;"></canvas>
+            <div id="stickyInsights"
+              style="font-size:0.85rem;color:#0b1220;line-height:1.4; text-align: left; margin-top: 6px;"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="waste-calculator.js"></script>
+  </body>
+
+</html>

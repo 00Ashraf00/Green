@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+      rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/card-modal.css">
+
+    <link rel="icon" href="/Green Dentistry/assets/images/enamel.png" type="image/png">
+
+    <link rel="stylesheet" href="/Green Dentistry/assets/css/">
+
+    <title>Green Dentistry Clinic</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!--
+
+
+https://templatemo.com/tm-570-chain-app-dev
+
+-->
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+      integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/templatemo-chain-app-dev.css">
+    <link rel="stylesheet" href="assets/css/animated.css">
+    <link rel="stylesheet" href="assets/css/owl.css">
+    <link rel="stylesheet" href="assets/css/modal.css">
+    <link rel="stylesheet" href="/Green Dentistry/assets/css/bg.css">
+
+    <style>
+      .logo img {
+        max-height: 76px;
+        /* desktop: reduced to 76px as requested */
+        width: auto;
+        /* Maintain aspect ratio */
+      }
+
+      /* Mobile: larger but constrained to fit */
+      @media (max-width: 768px) {
+        .logo img {
+          max-height: 62px;
+        }
+
+        /* larger mobile size */
+        .main-banner {
+          padding-top: 60px !important;
+        }
+      }
+
+      /* Replace blue with green for Green Dentistry */
+      .nav a.active,
+      .nav a:hover,
+      .gradient-button a,
+      .text-button a,
+      .white-button a {
+        color: #28a745 !important;
+        /* Green Dentistry color */
+      }
+
+      .gradient-button a,
+      .text-button a,
+      .white-button a {
+        background: #28a745 !important;
+        /* Green background for buttons */
+        border-color: #28a745 !important;
+      }
+
+      .gradient-button a:hover,
+      .text-button a:hover,
+      .white-button a:hover {
+        background: #218838 !important;
+        /* Darker green for hover effect */
+        border-color: #218838 !important;
+      }
+
+      /* Ensure text is always visible */
+      .gradient-button a,
+      .text-button a,
+      .white-button a {
+        color: #ffffff !important;
+        /* White text always visible */
+      }
+
+      .gradient-button a:hover,
+      .text-button a:hover,
+      .white-button a:hover {
+        background: #218838 !important;
+        /* Darker green for hover effect */
+        border-color: #218838 !important;
+      }
+
+      /* Replace blue with green for active links */
+      .nav a.active {
+        color: #28a745 !important;
+        /* Green Dentistry color */
+      }
+
+      .nav a:hover {
+        color: #218838 !important;
+        /* Darker green for hover effect */
+      }
+
+      /* Update green color for active links */
+      .nav a.active {
+        color: #1e7e34 !important;
+        /* New green color */
+      }
+
+      .nav a:hover {
+        color: #155724 !important;
+        /* Darker green for hover effect */
+      }
+
+      /* Force green color for active links */
+      .nav a.active {
+        color: #1e7e34 !important;
+        /* New green color */
+      }
+
+      .nav a:hover {
+        color: #155724 !important;
+        /* Darker green for hover effect */
+      }
+
+      /* increased gap: make hero sit lower below nav */
+      header.header-area,
+      header.header-sticky,
+      .nav {
+        margin-bottom: 16px !important;
+      }
+
+      /* increased a bit */
+
+      .main-banner {
+        margin-top: 0 !important;
+        padding-top: 120px !important;
+        /* increased spacing to make gap larger */
+      }
+
+      /* ensure container inside banner doesn't add extra top padding */
+      .main-banner .container {
+        padding-top: 0 !important;
+      }
+
+      /* mobile: proportional increase */
+      @media (max-width: 768px) {
+        .main-banner {
+          padding-top: 60px !important;
+        }
+      }
+
+      /* ensure hidden spacer classes stay hidden if present */
+      .sticky-placeholder,
+      .header-height {
+        display: none !important;
+      }
+
+      /* Mobile fix: ensure hero content sits below sticky header */
+      @media (max-width: 768px) {
+
+        /* تقريب ارتفاع الهيدر على الموبايل — زيّده أو قلّله إن لزم بعد التجربة */
+        .main-banner {
+          padding-top: 100px !important;
+          /* زيادة بسيطة لتظهر عنوان البطاقة كاملًا */
+        }
+
+        /* تأكد أن الهيدر فوق كل شيء */
+        header.header-area,
+        header.header-sticky {
+          z-index: 1100 !important;
+        }
+
+        /* تخفيف هامش العنوان إن كان يساهم في الإختباء */
+        .main-banner .left-content h2 {
+          margin-top: 0 !important;
+          line-height: 1.1;
+        }
+      }
+
+      /* ====== HERO: responsive flex layout overrides ====== */
+      .main-banner .container>.row {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+      }
+
+      .main-banner .left-content {
+        flex: 1 1 52%;
+        padding-right: 12px;
+      }
+
+      .main-banner .right-image {
+        flex: 1 1 48%;
+        text-align: center;
+      }
+
+      .main-banner .right-image img {
+        max-width: 100%;
+        width: 420px;
+        height: auto;
+        display: inline-block;
+      }
+
+      /* Button adjustments to be touch-friendly */
+      .gradient-button.start-form-btn,
+      .gradient-button.start-form-btn a,
+      .gradient-button.start-form-btn button {
+        padding: 12px 22px !important;
+        font-size: 16px !important;
+        border-radius: 12px !important;
+      }
+
+      /* Mobile-specific layout: stack and center */
+      @media (max-width: 768px) {
+        .main-banner {
+          padding-top: 80px !important;
+          padding-bottom: 40px !important;
+        }
+
+        .main-banner .container>.row {
+          flex-direction: column-reverse;
+          text-align: center;
+        }
+
+        .main-banner .left-content {
+          padding: 0 18px;
+        }
+
+        .main-banner .right-image img {
+          width: 320px;
+          max-width: 86%;
+        }
+
+        .main-banner .left-content h2 {
+          font-size: 28px !important;
+        }
+      }
+
+      /* Override to create a larger modal for the calculator iframe */
+      #formModalCard.large-modal {
+        width: 88% !important;
+        /* reduced from 98% */
+        max-width: none !important;
+        height: 94% !important;
+        /* slightly smaller than full-screen */
+        border-radius: 18px !important;
+      }
+
+      /* ensure iframe fits the enlarged card */
+      #formModalCard.large-modal #formIframe {
+        border-radius: 12px !important;
+        height: 100% !important;
+      }
+
+      /* New styles for service item with image/icon */
+      .service-item {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        padding: 20px;
+        border: 1px solid #e1e1e1;
+        border-radius: 10px;
+        transition: transform 0.3s;
+      }
+
+      .service-item:hover {
+        transform: translateY(-5px);
+        /* Lift effect on hover */
+      }
+
+      .service-item .icon {
+        flex-shrink: 0;
+        width: 60px;
+        height: 60px;
+        margin-right: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #f8f9fa;
+        /* Light background for contrast */
+
+      }
+
+      .service-item .icon img {
+        max-width: 80%;
+        max-height: 80%;
+        border-radius: 50%;
+      }
+
+      .service-item .icon i {
+        font-size: 24px;
+        color: #28a745;
+        /* Green color for icons */
+      }
+
+
+
+      .service-item .service-content h4 {
+        font-size: 18px;
+        margin: 0 0 10px 0;
+        color: #333;
+      }
+
+      .service-item .service-content p {
+        font-size: 14px;
+        margin: 0 0 10px 0;
+        color: #666;
+      }
+
+      .service-item .service-features {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 10px 0;
+        font-size: 14px;
+        color: #666;
+      }
+
+      .service-item .service-features li {
+        margin-bottom: 5px;
+        position: relative;
+        padding-left: 20px;
+      }
+
+      .service-item .service-features li:before {
+        content: '✔';
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: #28a745;
+        font-weight: bold;
+      }
+
+      .service-item .service-actions {
+        margin-top: 10px;
+      }
+
+      /* New styles for improved service item */
+      .service-item {
+        position: relative;
+        overflow: hidden;
+        background: #fff;
+        /* White background for contrast */
+        border: 1px solid #dee2e6;
+        /* Light gray border */
+        border-radius: 12px;
+        transition: transform 0.3s, box-shadow 0.3s;
+        /* Smooth transform and shadow transition */
+      }
+
+      .service-item:hover {
+        transform: translateY(-4px);
+        /* Slight lift effect on hover */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        /* Subtle shadow on hover */
+      }
+
+      .service-item .icon {
+        position: absolute;
+        top: -20px;
+        left: 20px;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+        /* Green gradient background */
+        color: #fff;
+        font-size: 28px;
+        /* Larger icon size */
+        line-height: 1;
+        /* Center icon vertically */
+      }
+
+      .service-item .icon img {
+        max-width: 80%;
+        max-height: 80%;
+        border-radius: 50%;
+        display: none;
+        /* Hide image by default */
+      }
+
+      .service-item .icon i {
+        display: block;
+        /* Show icon by default */
+      }
+
+      .service-item:hover .icon img {
+        display: block;
+        /* Show image on hover */
+      }
+
+      .service-item:hover .icon i {
+        display: none;
+        /* Hide icon on hover */
+      }
+
+      .service-item .service-content {
+        padding: 20px;
+        padding-top: 80px;
+        /* Add top padding to avoid overlap with icon */
+      }
+
+      .service-item .service-content h4 {
+        font-size: 20px;
+        margin: 0 0 10px 0;
+        color: #333;
+        position: relative;
+        display: inline-block;
+      }
+
+      .service-item .service-content h4:after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        bottom: -4px;
+        left: 0;
+        background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+        /* Green gradient underline */
+      }
+
+      .service-item .service-content p {
+        font-size: 15px;
+        margin: 0 0 10px 0;
+        color: #666;
+        line-height: 1.6;
+      }
+
+      .service-item .service-features {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 10px 0;
+        font-size: 14px;
+        color: #666;
+      }
+
+      .service-item .service-features li {
+        margin-bottom: 8px;
+        position: relative;
+        padding-left: 25px;
+      }
+
+      .service-item .service-features li:before {
+        content: '✔';
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: #28a745;
+        font-weight: bold;
+        font-size: 16px;
+        /* Slightly larger checkmark */
+      }
+
+      .service-item .service-actions {
+        margin-top: 15px;
+        display: flex;
+        gap: 10px;
+      }
+
+      .service-item .service-actions .btn {
+        flex: 1;
+        /* Make buttons equal width */
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .service-item {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .service-item .icon {
+          margin-bottom: 15px;
+        }
+      }
+
+      /* New styles for hero section */
+      .hero {
+        position: relative;
+        overflow: hidden;
+        background: #f8f9fa;
+        /* Light background for contrast */
+        padding: 60px 0;
+        /* Increased padding for hero section */
+      }
+
+      .hero-inner {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 40px;
+      }
+
+      .hero-left {
+        flex: 1;
+        /* Take available space */
+      }
+
+      .hero-right {
+        flex: 1;
+        /* Take available space */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .hero-image {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        /* Center image in its container */
+      }
+
+      /* Mobile adjustments for hero section */
+      @media (max-width: 768px) {
+        .hero-inner {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .hero-left {
+          margin-bottom: 30px;
+        }
+
+        .hero h2 {
+          font-size: 28px;
+          /* Larger title on mobile */
+        }
+
+        .hero p.lead {
+          font-size: 16px;
+          /* Adjusted subtitle size */
+        }
+      }
+    </style>
+
+  </head>
+
+  <body>
+
+
+
+
+    <div id="tsparticles"></div>
+
+
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="js-preloader" class="js-preloader">
+      <div class="preloader-inner">
+        <span class="dot"></span>
+        <div class="dots">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
+
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <nav class="main-nav">
+              <!-- ***** Logo Start ***** -->
+              <div><a href="index.html" class="logo">
+                  <img src="assets/images/enamel.png" alt="Green">
+                </a></div>
+              <!-- ***** Logo End ***** -->
+              <!-- ***** Menu Start ***** -->
+              <ul class="nav">
+                <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
+                <li class="scroll-to-section"><a href="#services">Waste Calculator</a></li>
+                <li class="scroll-to-section"><a href="#sustain">Sustainable Materials Selector</a></li>
+                <!-- <li class="scroll-to-section"><a href="/waste-calculator">Waste Calculator</a></li>
+                <li class="scroll-to-section"><a href="#pricing">Pricing</a></li>
+                <li class="scroll-to-section"><a href="#newsletter">Newsletter</a></li> -->
+                <li>
+                </li>
+              </ul>
+              <a class='menu-trigger'>
+                <span>Menu</span>
+              </a>
+              <!-- ***** Menu End ***** -->
+            </nav>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- ***** Header Area End ***** -->
+
+    <div class="main-banner hero wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
+      <div class="container">
+        <div class="hero-inner d-flex">
+          <div class="hero-left">
+            <div class="left-content show-up header-text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
+              <h2>Welcome to Green Dentistry Clinic</h2>
+
+              <div class="white-button first-button scroll-to-section" style="display:inline-block;">
+                <button type="button" class="gradient-button start-form-btn" id="startFormBtn"
+                  aria-controls="formModalCard" title="Start your form">Start Your Form</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-right">
+            <div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
+              <img src="assets/images/slider-dec.png" alt="Hero illustration" class="hero-image">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="services" class="services section">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 offset-lg-2">
+            <div class="section-heading  wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.5s">
+              <h4>Waste Reduction <em>Calculator</em> for your clinic</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-12 mb-4" id="calccalc">
+            <div class="service-item first-service" role="region" aria-labelledby="svc-waste-title" tabindex="0">
+              <!-- optional image (falls back to icon if missing) -->
+              <img src="assets/images/calculator.png" alt="Waste Estimation Icon" class="service-icon-img"
+                onload="this.nextElementSibling && (this.nextElementSibling.style.display='none')"
+                onerror="this.style.display='none'; this.nextElementSibling && (this.nextElementSibling.style.display='block')">
+              <!-- fallback FontAwesome icon (visible when image missing) -->
+              <i class="fas fa-hand-holding-medical service-icon-fa" aria-hidden="true"></i>
+
+
+              <div class="service-content">
+                <div style="display:flex;align-items:center;gap:10px;">
+                  <h4 id="svc-waste-title">Real‑Time Waste Estimation</h4>
+                  <!-- <span class="service-badge" aria-hidden="true">موصى به</span> -->
+                </div>
+
+                <p class="service-excerpt">Estimate consumable waste quickly — choose per‑patient or per‑period input,
+                  and get Clinical breakdowns</p>
+
+                <div class="service-actions" role="group" aria-label="Service actions">
+                  <button class="btn btn-primary start-calculator-btn" type="button" title="Open calculator in modal">
+                    <i class="fas fa-calculator" aria-hidden="true" style="margin-right:8px"></i>Start Calculator
+                  </button>
+
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="sustain" class="services section">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 offset-lg-2">
+            <div class="section-heading  wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.5s">
+              <h4>Sustainable Materials <em>Selector</em></h4>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-12 mb-4">
+            <div class="service-item third-service" role="region" aria-labelledby="svc-sustain-title" tabindex="0">
+              <img src="assets/images/comparison.png" alt="Materials Selector Icon" class="service-icon-img"
+                onload="this.nextElementSibling && (this.nextElementSibling.style.display='none')"
+                onerror="this.style.display='none'; this.nextElementSibling && (this.nextElementSibling.style.display='block')">
+              <i class="fas fa-seedling service-icon-fa" aria-hidden="true"></i>
+
+              <div class="service-content">
+                <div style="display:flex;align-items:center;gap:10px;">
+                  <h4 id="svc-sustain-title">Side‑by‑Side Material Comparison</h4>
+                </div>
+
+                <p class="service-excerpt">Compare traditional and sustainable dental materials at a glance — view
+                  environmental scores, recyclability, and approximate cost impact so you can make informed choices for
+                  your practice.</p>
+
+                <div class="service-actions" role="group" aria-label="Sustain actions">
+                  <button class="btn btn-primary start-sus-btn" type="button" title="Open material selector">
+                    <i class="fas fa-search" aria-hidden="true" style="margin-right:8px"></i>Explore Alternatives
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <footer id="newsletter">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 offset-lg-2">
+            <div class="section-heading">
+
+            </div>
+          </div>
+          <!-- <div class="col-lg-6 offset-lg-3">
+            <form id="search" action="#" method="GET">
+              <div class="row">
+                <div class="col-lg-6 col-sm-6">
+                  <fieldset>
+                    <input type="address" name="address" class="email" placeholder="Email Address..." autocomplete="on"
+                      required>
+                  </fieldset>
+                </div>
+                <div class="col-lg-6 col-sm-6">
+                  <fieldset>
+                    <button type="submit" class="main-button">Subscribe Now <i class="fa fa-angle-right"></i></button>
+                  </fieldset>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-3">
+            <div class="footer-widget">
+              <h4>Contact Us</h4>
+              <p>Rio de Janeiro - RJ, 22795-008, Brazil</p>
+              <p><a href="#">010-020-0340</a></p>
+              <p><a href="#">info@company.co</a></p>
+            </div>
+          </div> -->
+          <!-- <div class="col-lg-3">
+            <div class="footer-widget">
+              <h4>About Us</h4>
+              <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Testimonials</a></li>
+                <li><a href="#">Pricing</a></li>
+              </ul>
+              <ul>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Testimonials</a></li>
+                <li><a href="#">Pricing</a></li>
+              </ul>
+            </div>
+          </div> -->
+          <!-- <div class="col-lg-3">
+            <div class="footer-widget">
+              <h4>Useful Links</h4>
+              <ul>
+                <li><a href="#">Free Apps</a></li>
+                <li><a href="#">App Engine</a></li>
+                <li><a href="#">Programming</a></li>
+                <li><a href="#">Development</a></li>
+                <li><a href="#">App News</a></li>
+              </ul>
+              <ul>
+                <li><a href="#">App Dev Team</a></li>
+                <li><a href="#">Digital Web</a></li>
+                <li><a href="#">Normal Apps</a></li>
+              </ul>
+            </div>
+          </div> -->
+          <!-- <div class="col-lg-3">
+            <div class="footer-widget">
+              <h4>About Our Company</h4>
+              <div class="logo">
+                <img src="assets/images/white-logo.png" alt="">
+              </div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore.</p>
+            </div>
+          </div> -->
+          <div class="col-lg-12">
+            <div class="copyright-text">
+              <p>Copyright © 2025 AAAA. All Rights Reserved.
+                <br>Design: Abdooooooo
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+
+    <!-- ===== FORM MODAL ===== -->
+    <div id="formModalOverlay">
+      <div id="formModalCard">
+        <span id="closeModalBtn" onclick="closeFormModal()">&times;</span>
+        <iframe id="formIframe"></iframe>
+      </div>
+    </div>
+
+
+
+
+    <!-- Scripts -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/owl-carousel.js"></script>
+    <script src="assets/js/animation.js"></script>
+    <script src="assets/js/imagesloaded.js"></script>
+    <script src="assets/js/popup.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <script src="assets/js/modal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.min.js"></script>
+    <script src="/Green Dentistry/assets/js/bg.js"></script>
+
+    <!-- New: handler to open waste-calculator inside the same modal but enlarged -->
+    <script>
+      (function () {
+        const calcBtns = document.querySelectorAll('.start-calculator-btn');
+        calcBtns.forEach(btn => {
+          btn.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            // Open modal using existing function (will set a default src briefly)
+            if (typeof openFormModal === 'function') openFormModal();
+
+            // Replace iframe src with the waste-calculator page (adjust path as served on your server)
+            const iframe = document.getElementById('formIframe');
+            const card = document.getElementById('formModalCard');
+            if (iframe) iframe.src = '/Green Dentistry/waste-calculator/waste-calculator.html';
+            if (card) card.classList.add('large-modal');
+
+            // cleanup routine: when modal is hidden remove the large-modal class
+            const overlay = document.getElementById('formModalOverlay');
+            const cleanup = () => {
+              if (!overlay) return;
+              // if overlay is not visible, remove class
+              const styleDisplay = window.getComputedStyle(overlay).display;
+              if (styleDisplay === 'none') {
+                card.classList.remove('large-modal');
+                iframe.src = ''; // clear src to stop any ongoing video or audio
+              }
+            };
+
+            overlay.addEventListener('transitionend', cleanup, { once: true });
+          });
+        });
+      })();
+    </script>
+
+    <!-- New: handler to open sustain selector inside the same modal with same modal sizing as calculator -->
+    <script>
+      (function () {
+        const sustainBtns = document.querySelectorAll('.start-sus-btn');
+        sustainBtns.forEach(btn => {
+          btn.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            // Open modal using existing function (sets a default src briefly)
+            if (typeof openFormModal === 'function') openFormModal();
+
+            // Replace iframe src with the sustain selector page
+            const iframe = document.getElementById('formIframe');
+            const card = document.getElementById('formModalCard');
+            if (iframe) iframe.src = '/Green Dentistry/sustain/sustain.html';
+            if (card) card.classList.add('large-modal');
+
+            // cleanup: remove large-modal and clear src when overlay gets hidden
+            const overlay = document.getElementById('formModalOverlay');
+            const cleanup = () => {
+              if (!overlay) return;
+              const styleDisplay = window.getComputedStyle(overlay).display;
+              if (styleDisplay === 'none') {
+                if (card) card.classList.remove('large-modal');
+                if (iframe) iframe.src = '';
+              }
+            };
+
+            overlay.addEventListener('transitionend', cleanup, { once: true });
+          });
+        });
+      })();
+    </script>
+
+  </body>
+
+</html>

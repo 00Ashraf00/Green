@@ -1,0 +1,114 @@
+/* ===== Modal Background ===== */
+#formModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9990;
+  backdrop-filter: blur(10px);
+  animation: fadeIn 0.3s ease;
+}
+
+/* ===== Modal Card ===== */
+#formModalCard {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20px);
+  width: 82%;
+  max-width: 760px;
+  height: 85%;
+  border-radius: 35px;
+  overflow: hidden;
+  transform: translateY(40px);
+  opacity: 0;
+  transition: 0.35s ease;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* Animate when opened */
+#formModalOverlay.active #formModalCard {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* iframe inside modal */
+#formIframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 35px;
+}
+
+/* Large modal variant (used for calculator) - slightly smaller width than before */
+#formModalCard.large-modal {
+  width: 88% !important;
+  max-width: none !important;
+  height: 94% !important;
+  border-radius: 18px !important;
+}
+
+/* ensure iframe fits the enlarged card */
+#formModalCard.large-modal #formIframe {
+  border-radius: 12px !important;
+  height: 100% !important;
+}
+
+/* Close button */
+#closeModalBtn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 28px;
+  cursor: pointer;
+  z-index: 9999;
+  color: #333;
+  transition: 0.25s;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 8px 12px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+#closeModalBtn:hover {
+  color: #118a43;
+  transform: scale(1.1);
+}
+
+/* Fade animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+
+/* ===== Modern Step Bar ===== */
+.stepbar {
+  width: 100%;
+  max-width: 720px;
+  height: 10px;
+  margin: 25px auto 20px;
+  background: linear-gradient(90deg, #e0f5e9, #d7f9ed);
+  border-radius: 50px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.06) inset;
+}
+
+.step-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #21c064, #32d475, #14a04a);
+  border-radius: 50px;
+  transition: width 0.45s ease;
+  box-shadow: 0 0 8px rgba(33, 192, 100, 0.4);
+}

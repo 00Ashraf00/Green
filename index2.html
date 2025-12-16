@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Patient Form</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.min.css" />
+
+    <style>
+      /* Controls style: أصغر الأزرار، جنب بعض، نفس عرض سؤال البطاقة */
+      .controls {
+        display: flex;
+        gap: 8px;
+        width: 100%;
+        max-width: 720px;
+        /* يضبط عرض الحاوية لتساوي عرض البطاقة */
+        margin: 16px auto 0;
+        box-sizing: border-box;
+      }
+
+      .controls button {
+        flex: 1;
+        padding: 8px 10px;
+        font-size: 14px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        min-width: 0;
+      }
+
+      .controls button#nextBtn {
+        background: #28a745;
+        color: #fff;
+        border-color: #218838;
+      }
+
+      .controls button#back {
+        background: #f8f9fa;
+        color: #333;
+        border-color: #ced4da;
+      }
+
+      /* اجعل بطاقات الأسئلة وسيلة مناسبة للعرض المركزي */
+      .card {
+        max-width: 720px;
+        margin: 0 auto;
+        box-sizing: border-box;
+        padding: 20px;
+
+      }
+
+      .card {
+        background: linear-gradient(135deg, #ffffff 0%, #f0fff4 100%);
+        border-radius: 25px;
+        padding: 30px;
+        backdrop-filter: blur(4px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+      }
+
+
+      /* ===== Modern Progress Bar ===== */
+      .progress {
+        width: 100%;
+        max-width: 720px;
+        height: 10px;
+        background: #e6efe8;
+        margin: 20px auto;
+        border-radius: 20px;
+        overflow: hidden;
+        position: relative;
+        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .progress .bar {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #24b05a, #28a745);
+        border-radius: 20px;
+        transition: width 0.35s ease;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      }
+
+
+      /* Ensure form controls stay inside the card and do not overflow */
+      .card label {
+        display: block;
+      }
+
+      .card input[type="text"],
+      .card input[type="number"],
+      .card input[type="tel"],
+      .card input[type="date"],
+      .card select,
+      .card textarea {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        display: block;
+        overflow: auto;
+        word-wrap: break-word;
+        word-break: break-word;
+      }
+
+      .card textarea {
+        min-height: 80px;
+        max-height: 320px;
+        resize: vertical;
+        /* allow vertical resize only */
+        padding: 8px;
+      }
+
+      /* Optional: ensure long inline elements wrap inside labels */
+      .card label,
+      .card .right-content {
+        white-space: normal;
+      }
+
+      /* Welcome card specific styling (keeps it elegant inside the same card look) */
+      .card.welcome {
+        max-width: 720px;
+        margin: 20px auto;
+        background: linear-gradient(135deg, #ffffff 0%, #f0fff4 100%);
+        border-radius: 25px;
+        padding: 36px 24px;
+        box-shadow: 0 10px 30px rgba(20, 160, 74, 0.08);
+        border: 1px solid rgba(34, 139, 76, 0.06);
+      }
+
+      .card.welcome h1 {
+        margin: 8px 0 6px;
+        font-weight: 700;
+      }
+
+      .card.welcome p {
+        max-width: 640px;
+        margin: 0 auto 14px;
+        color: #546b54;
+      }
+
+      .start-btn {
+        box-shadow: 0 6px 16px rgba(40, 167, 69, 0.18);
+        transition:
+          transform .12s ease,
+          box-shadow .12s ease;
+      }
+
+      .start-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 24px rgba(40, 167, 69, 0.22);
+      }
+
+      /* Hide Back/Next controls only while welcome card is active */
+      .card.welcome.active~.controls {
+        display: none !important;
+      }
+
+      /* ensure welcome looks full-width on mobile */
+      @media (max-width: 768px) {
+        .card.welcome {
+          padding: 24px 16px;
+          margin: 12px;
+        }
+
+        .start-btn {
+          width: 100%;
+        }
+      }
+
+      /* Hide Amount input by default, show only when "Yes" is selected */
+      #amountContainer {
+        display: none;
+        margin-top: 12px;
+      }
+
+      #amountContainer.show {
+        display: block;
+      }
+
+      /* Image preview container */
+      #imagePreview {
+        margin-top: 16px;
+        max-width: 300px;
+      }
+
+      #imagePreview img {
+        width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Hide Back/Next on thank you card */
+      .card.thankyou.active~.controls {
+        display: none !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div id="progress" class="progress">
+        <div class="bar"></div>
+      </div>
+
+
+      <form id="form">
+
+        <!-- Welcome card: new intro screen before the name question -->
+        <div class="card welcome active" aria-hidden="false" style="text-align:center;">
+          <div style="max-width:720px;margin:0 auto;padding:24px;">
+            <img src="assets/images/enamel.png" alt="logo" style="width:96px;height:auto;margin-bottom:16px;">
+            <h1 style="font-size:28px;margin-bottom:8px;color:#155724;">Welcome to Green Dentistry</h1>
+            <p style="color:#4b4b4b;margin-bottom:18px;line-height:1.5;">
+              Before we begin, we'll ask a few basic health questions to help us provide better care.
+              The process is quick and designed to be simple.
+            </p>
+            <button type="button" id="beginBtn" class="start-btn"
+              style="padding:14px 26px;border-radius:12px;border:none;background:#28a745;color:#fff;font-size:16px;cursor:pointer;">
+              Get Started
+            </button>
+          </div>
+        </div>
+
+        <!-- NOTE: removed 'active' from the original first card so welcome is shown first -->
+        <div class="card">
+          <h3>What is your Full Name?</h3>
+          <input type="text" required />
+        </div>
+
+        <div class="card">
+          <h3>How old are you?</h3>
+          <input type="number" min="1" required />
+        </div>
+
+        <div class="card">
+          <h3>What is your gender?</h3>
+          <select required>
+            <option value="">Select...</option>
+            <option>Male</option>
+            <option>Female</option>
+          </select>
+        </div>
+
+        <div class="card">
+          <h3>Marital Status</h3>
+          <select required>
+            <option>Single</option>
+            <option>Married</option>
+            <option>Divorced</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div class="card">
+          <h3>What is your Occupation?</h3>
+          <input type="text">
+        </div>
+
+        <div class="card">
+          <h3>Phone Number</h3>
+          <input id="phone" type="tel" placeholder="Enter your phone number" required />
+        </div>
+
+        <div class="card">
+          <h3>E-mail</h3>
+          <input type="text">
+        </div>
+
+        <div class="card">
+          <h3>What is your address?</h3>
+          <input type="text">
+        </div>
+
+
+
+        <div class="card">
+          <h2>Medical History</h2>
+          <label>Do you have heart disease or high blood pressure?
+            <select required>
+              <option value="" selected disabled>Select an option</option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </label>
+        </div>
+
+
+
+        <div class="card">
+          <h2>Medical History</h2>
+          <label>Are you diabetic?
+            <select required>
+              <option value="" selected disabled>Select an option</option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="card">
+          <h2>Medical History</h2>
+
+          <label>Medications:<textarea required></textarea></label>
+
+        </div>
+
+
+        <div class="card">
+          <h2>Medical History</h2>
+
+          <label>Allergies:<textarea required></textarea></label>
+        </div>
+
+
+        <div class="card">
+          <h2>Medical History</h2>
+          <label>Have you fainted during dental treatment?
+            <select>
+              <option value="" selected disabled>Select an option</option>
+
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </label>
+
+        </div>
+
+        <div class="card">
+          <h2>Medical History</h2>
+          <label>Pregnancy Status:
+            <select>
+              <option value="" selected disabled>Select an option</option>
+
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </label>
+        </div>
+
+
+        <div class="card">
+          <h2>Medical History</h2>
+
+          <label>Surgeries or hospitalizations:<textarea required></textarea></label>
+        </div>
+
+        <div class="card">
+          <h2>Medical History</h2>
+
+          <label>Other Medical Conditions?<textarea required></textarea></label>
+        </div>
+
+
+
+        <div class="card">
+          <h2>Chief Complaint</h2>
+          <label>Main Reason for Visit:<textarea required></textarea></label>
+
+        </div>
+
+
+        <div class="card">
+          <h2>Chief Complaint</h2>
+          <label>When did the issue start?<input type="text"></label>
+
+        </div>
+
+        <div class="card">
+          <h2>Chief Complaint</h2>
+
+          <label>Is it getting:
+            <select>
+              <option value="" selected disabled>Select an option</option>
+
+              <option>Better</option>
+              <option>Worse</option>
+              <option>Same</option>
+            </select>
+          </label>
+        </div>
+
+
+        <div class="card">
+          <h2>Chief Complaint</h2>
+          <label>What increases it?<textarea></textarea></label>
+        </div>
+
+        <div class="card">
+          <h2>Chief Complaint</h2>
+          <label>What Relieves it?<textarea></textarea></label>
+        </div>
+
+        <div class="card">
+          <h2>Dental History</h2>
+          <label>Sensitivity to hot/cold/sweet?
+            <select>
+              <option value="" selected disabled>Select an option</option>
+
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </label>
+          <label>Pain while chewing?
+            <select>
+              <option value="" selected disabled>Select an option</option>
+
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </label>
+          <label>Bleeding or swollen gums?
+            <select>
+              <option value="" selected disabled>Select an option</option>
+
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </label>
+
+        </div>
+
+
+        <div class="card">
+          <h2>Dental History</h2>
+          <label>Teeth grinding?
+            <select>
+              <option value="" selected disabled>Select an option</option>
+
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </label>
+          <label>Jaw pain or clicking?
+            <select>
+              <option value="" selected disabled>Select an option</option>
+
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </label>
+          <label>Dry mouth?
+            <select>
+              <option value="" selected disabled>Select an option</option>
+
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </label>
+        </div>
+
+
+        <div class="card">
+          <h2>Dental History</h2>
+          <label>Extracted teeth (reason):<textarea></textarea></label>
+          <label>Previous restorations:
+            <select>
+              <option value="" selected disabled>Select an option</option>
+
+              <option>Fillings</option>
+              <option>Crowns</option>
+              <option>Bridges</option>
+              <option>Partial Dentures</option>
+              <option>Full Dentures</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="card">
+          <h2>Dental History</h2>
+          <label>Last dental appointment:<input type="date"></label>
+          <label>Do you smoke?
+            <select id="smokeSelect" required>
+              <option value="" selected disabled>Select an option</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </label>
+          <div id="amountContainer">
+            <label>Amount:<input type="text" id="amountInput"></label>
+          </div>
+        </div>
+
+        <!-- New X-ray & Image Upload Card -->
+        <div class="card">
+          <h2>Last X-ray</h2>
+          <label>When was your last X-ray?<input type="date" required></label>
+          <label>Upload X-ray Image (Optional):
+            <input type="file" id="xrayFile" accept="image/*" style="display: block; margin-top: 8px;">
+          </label>
+          <div id="imagePreview"></div>
+        </div>
+
+        <div class="card">
+          <h2>Final Consent</h2>
+          <label><input type="checkbox" required /> I confirm that the information provided is accurate.</label>
+        </div>
+
+        <!-- Add this THANK YOU card just before the Controls div -->
+        <div class="card thankyou" aria-hidden="true"
+          style="text-align:center; display:none; max-width:720px; margin:0 auto; padding:40px;">
+          <div style="font-size:48px;color:#28a745;line-height:1;margin-bottom:12px;">✓</div>
+          <h2 style="margin-bottom:8px;">Thank You! Your Information Has Been Submitted</h2>
+          <p style="color:#666;margin-bottom:20px;">We have successfully received your form. We will contact you if
+            needed.</p>
+          <button type="button" id="closeAfterFinish"
+            style="padding:10px 20px;border-radius:8px;background:#28a745;color:#fff;border:none;cursor:pointer;">
+            Close Form
+          </button>
+        </div>
+
+        <!-- Controls: Back و Next -->
+        <div class="controls" aria-hidden="false">
+          <button id="back" class="btn" type="button" aria-label="Back" disabled>Back</button>
+          <button type="button" id="nextBtn">Next</button>
+        </div>
+
+      </form>
+    </div>
+
+    <!-- سكربت الموقع العام -->
+    <script src="assets/js/script.js"></script>
+
+    <!-- مكتبة intl-tel-input -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+
+    <!-- تهيئة حقل الموبايل -->
+    <script>
+      /* ...existing code... */
+    </script>
+
+    <!-- استبدال سكربت التنقل المتعارض بسكربت واحد يعمل Back/Next -->
+    <script>
+      // filepath: a:\HP\Desktop\Pedo\Green Dentistry\index2.html
+      (function () {
+        // عناصر التحكم والبطاقات
+        const cards = Array.from(document.querySelectorAll('.card'));
+        const progress = document.getElementById('progress');
+        const backBtn = document.getElementById('back');
+        const nextBtn = document.getElementById('nextBtn');
+        const form = document.getElementById('form');
+
+        // مكدس لحفظ التاريخ الداخلي (لنعود إليه بالـ Back)
+        let stack = [];
+
+        // فهرس السؤال الحالي (ابحث عن .active أولاً)
+        let currentIndex = Math.max(0, cards.findIndex(c => c.classList.contains('active')));
+        if (currentIndex === -1) currentIndex = 0;
+
+        /* ----------------------------
+           New: reset numeric fields on load / fresh start
+           ---------------------------- */
+        function resetNumericFields() {
+          // Set all number inputs to 0 (step=1, min=0 enforced in markup)
+          const numberInputs = Array.from(document.querySelectorAll('input[type="number"]'));
+          numberInputs.forEach(inp => {
+            try { inp.value = 0; } catch (e) { /* ignore */ }
+          });
+
+          // Clear file inputs and preview areas
+          const fileInputs = Array.from(document.querySelectorAll('input[type="file"]'));
+          fileInputs.forEach(fi => {
+            try { fi.value = ''; } catch (e) { /* ignore */ }
+          });
+          const imagePreview = document.getElementById('imagePreview');
+          if (imagePreview) imagePreview.innerHTML = '';
+
+          // Reset amount input (used with smoke select) if exists
+          const amountInput = document.getElementById('amountInput');
+          if (amountInput) {
+            amountInput.value = '';
+            amountInput.removeAttribute('required');
+          }
+
+          // Reset selects that should start empty (if present)
+          const smokeSelect = document.getElementById('smokeSelect');
+          if (smokeSelect) smokeSelect.selectedIndex = 0;
+
+          // If you want other fields reset (textareas/text inputs), add here as needed.
+        }
+
+        function ensureProgressBar() {
+          if (!progress) return null;
+          let bar = progress.querySelector('.bar');
+          if (!bar) {
+            bar = document.createElement('div');
+            bar.className = 'bar';
+            bar.style.height = '100%';
+            bar.style.width = '0%';
+            bar.style.background = '#28a745';
+            bar.style.transition = 'width .25s ease';
+            progress.appendChild(bar);
+          }
+          return bar;
+        }
+
+        const bar = ensureProgressBar();
+
+        function updateProgress() {
+          if (!bar) return;
+
+          // build list of "question" cards (exclude welcome & thankyou)
+          const questionCards = cards.filter(c => !c.classList.contains('welcome') && !c.classList.contains('thankyou'));
+
+          const currentCard = cards[currentIndex];
+
+          // If current is welcome -> handled elsewhere (it's hidden), but ensure 0 width
+          if (currentCard && currentCard.classList.contains('welcome')) {
+            bar.style.width = '0%';
+            return;
+          }
+
+          // If current is thankyou -> show full 100%
+          if (currentCard && currentCard.classList.contains('thankyou')) {
+            bar.style.width = '100%';
+            return;
+          }
+
+          // find index among questionCards
+          const qIndex = questionCards.findIndex(c => c === currentCard);
+          const total = Math.max(1, questionCards.length);
+
+          // Show progress as completed questions before current one:
+          // first question -> qIndex === 0 -> 0%
+          // second question -> qIndex === 1 -> 1/total * 100, etc.
+          const pct = Math.round((Math.max(0, qIndex) / total) * 100);
+          bar.style.width = pct + '%';
+        }
+
+        function showQuestion(index) {
+          index = Math.max(0, Math.min(index, cards.length - 1));
+          cards.forEach((c, i) => {
+            const isActive = (i === index);
+            c.classList.toggle('active', isActive);
+            // control visibility for thankyou card (it also has .card)
+            if (c.classList.contains('thankyou')) {
+              c.style.display = isActive ? 'block' : 'none';
+            }
+          });
+          currentIndex = index;
+          updateProgress();
+          updateButtons();
+          document.dispatchEvent(new CustomEvent('questionChanged', { detail: { index: currentIndex } }));
+        }
+
+        function updateButtons() {
+          const currentCard = cards[currentIndex];
+          const isThankYou = currentCard && currentCard.classList.contains('thankyou');
+
+          // When on thankyou: hide Back (or disable) and change Next to Close
+          if (isThankYou) {
+            backBtn.disabled = true;
+            nextBtn.textContent = 'Close';
+          } else {
+            // Special case: welcome card
+            if (currentCard && currentCard.classList.contains('welcome')) {
+              backBtn.disabled = true;
+              nextBtn.textContent = 'Start';
+            } else {
+              backBtn.disabled = !(stack.length > 0 || currentIndex > 0);
+              nextBtn.textContent = (currentIndex === cards.length - 1) ? 'Finish' : 'Next';
+            }
+          }
+
+          // Hide progress bar while the welcome card is active, show otherwise
+          if (progress) {
+            if (currentCard && currentCard.classList.contains('welcome')) {
+              progress.style.display = 'none';
+            } else {
+              progress.style.display = '';
+            }
+          }
+        }
+
+        // تحقق من صلاحية الحقول داخل البطاقة الحالية
+        function currentCardIsValid() {
+          const currentCard = cards[currentIndex];
+          if (!currentCard) return true;
+          const inputs = Array.from(currentCard.querySelectorAll('input, select, textarea'));
+          for (const inp of inputs) {
+            if (!inp.checkValidity()) {
+              // إن أردت اظهار خطأ، نفّذ reportValidity
+              if (typeof inp.reportValidity === 'function') inp.reportValidity();
+              return false;
+            }
+          }
+          return true;
+        }
+
+        // حدث Next
+        nextBtn.addEventListener('click', function (e) {
+          e.preventDefault();
+
+          // If current card is thankyou -> tell parent to close modal
+          const currentCard = cards[currentIndex];
+          if (currentCard && currentCard.classList.contains('thankyou')) {
+            // send message to parent (modal host) to close modal
+            if (window.parent && window.parent !== window) {
+              window.parent.postMessage({ type: 'closeFormModal' }, '*');
+            }
+            return;
+          }
+
+          // تحقق من الحقول required داخل البطاقة
+          if (!currentCardIsValid()) return;
+
+          // خزّن الفهرس الحالي في المكدس للعودة إليه لاحقًا
+          stack.push(currentIndex);
+
+          if (currentIndex < cards.length - 1) {
+            showQuestion(currentIndex + 1);
+          } else {
+            // Was final real question -> instead of submitting, show thankyou card
+            // find thankyou index
+            const thankIndex = cards.findIndex(c => c.classList.contains('thankyou'));
+            if (thankIndex !== -1) {
+              showQuestion(thankIndex);
+            } else {
+              // fallback: submit
+              try { form.submit(); } catch (err) { console.log('submit failed', err); }
+            }
+          }
+        });
+
+        // حدث Back
+        backBtn.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          if (stack.length > 0) {
+            const prev = stack.pop();
+            showQuestion(prev);
+          } else if (currentIndex > 0) {
+            // كحالة أخيرة: انتقل لليسار خطوة
+            showQuestion(currentIndex - 1);
+          } // إن لم يوجد شيء لا نفعل (الزر سيكون معطلاً)
+        });
+
+        // Close button inside thankyou card (in case user clicks it directly)
+        document.addEventListener('DOMContentLoaded', function () {
+          // Reset numeric fields when the page loads inside the iframe or on refresh
+          resetNumericFields();
+
+          const closeBtn = document.getElementById('closeAfterFinish');
+          if (closeBtn) {
+            closeBtn.addEventListener('click', function () {
+              if (window.parent && window.parent !== window) {
+                window.parent.postMessage({ type: 'closeFormModal' }, '*');
+              }
+            });
+          }
+          showQuestion(currentIndex);
+        });
+
+        // استدعاءات تهيئة
+        document.addEventListener('DOMContentLoaded', function () { showQuestion(currentIndex); });
+        // دعم تحميل مباشر في حال الصفحة بالفعل محمّلة
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+          showQuestion(currentIndex);
+        }
+
+        // Begin button on welcome card should behave like Next
+        document.addEventListener('DOMContentLoaded', function () {
+          const begin = document.getElementById('beginBtn');
+          if (begin) {
+            begin.addEventListener('click', function () {
+              // trigger the same flow as clicking Next (will validate and push stack)
+              nextBtn.click();
+            });
+          }
+        });
+
+        // Handle "Do you smoke?" conditional display of Amount
+        const smokeSelect = document.getElementById('smokeSelect');
+        const amountContainer = document.getElementById('amountContainer');
+        if (smokeSelect) {
+          smokeSelect.addEventListener('change', function () {
+            if (this.value === 'yes') {
+              amountContainer.classList.add('show');
+              const amountInput = document.getElementById('amountInput');
+              if (amountInput) amountInput.setAttribute('required', 'required');
+            } else {
+              amountContainer.classList.remove('show');
+              const amountInput = document.getElementById('amountInput');
+              if (amountInput) {
+                amountInput.removeAttribute('required');
+                amountInput.value = '';
+              }
+            }
+          });
+        }
+
+        // Handle X-ray image preview
+        const xrayFile = document.getElementById('xrayFile');
+        const imagePreview = document.getElementById('imagePreview');
+        if (xrayFile) {
+          xrayFile.addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (file) {
+              const reader = new FileReader();
+              reader.onload = function (event) {
+                imagePreview.innerHTML = '<img src="' + event.target.result + '" alt="X-ray Preview">';
+              };
+              reader.readAsDataURL(file);
+            } else {
+              imagePreview.innerHTML = '';
+            }
+          });
+        }
+      })();
+    </script>
+
+  </body>
+
+</html>

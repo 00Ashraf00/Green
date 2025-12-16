@@ -1,0 +1,421 @@
+/* Basic reset & typography */
+:root {
+  --bg: #f6f8fb;
+  --card: #ffffff;
+  --muted: #6b7280;
+  --accent: #16a34a;
+  --warn: #f59e0b;
+  --danger: #ef4444;
+}
+
+* {
+  box-sizing: border-box
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: Inter, system-ui, Arial, sans-serif;
+  background: var(--bg);
+  color: #0f172a
+}
+
+.container {
+  max-width: 1100px;
+  margin: 28px auto;
+  padding: 16px
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: 1.6rem;
+  color: var(--accent)
+}
+
+.hero .lead {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 0.95rem
+}
+
+.card {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06)
+}
+
+.row {
+  display: flex;
+  gap: 16px;
+  flex-direction: column
+}
+
+.form-col {
+  flex: 2;
+  padding-bottom: 0;
+  /* default: no padding needed on desktop */
+}
+
+.results-col {
+  flex: 1
+}
+
+/* grid for inputs */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px
+}
+
+@media(min-width:640px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr)
+  }
+}
+
+@media(min-width:1024px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr)
+  }
+}
+
+.field {
+  margin-bottom: 12px
+}
+
+.field label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #0f172a
+}
+
+input[type="number"],
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #e6e9ef;
+  border-radius: 8px;
+  background: #fff
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 0.85rem
+}
+
+/* results */
+.card-sub {
+  background: linear-gradient(180deg, #ffffff, #f8fffa);
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 12px
+}
+
+.result-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px dashed #eef2e9
+}
+
+.result-row strong {
+  font-weight: 700;
+  color: #0b1220
+}
+
+.benchmark {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-start
+}
+
+.badge {
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.85rem
+}
+
+.badge.green {
+  background: var(--accent);
+  color: #fff
+}
+
+.badge.yellow {
+  background: var(--warn);
+  color: #111
+}
+
+.badge.red {
+  background: var(--danger);
+  color: #fff
+}
+
+.badge.neutral {
+  background: #e6eef0;
+  color: #0b1220
+}
+
+/* recommendations */
+.recommendations h4 {
+  margin: 0 0 8px 0
+}
+
+.rec-list {
+  margin: 0;
+  padding-left: 18px;
+  color: #0b1220
+}
+
+/* spacing */
+.section-title {
+  margin-top: 12px;
+  margin-bottom: 8px;
+  font-weight: 700;
+  color: #0b1220
+}
+
+small.small {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted)
+}
+
+/* layout adjustments */
+@media(min-width:900px) {
+  .row {
+    flex-direction: row;
+    align-items: flex-start
+  }
+
+  .form-col {
+    min-width: 0
+  }
+
+  .results-col {
+    width: 320px
+  }
+}
+
+.input-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.scope-select {
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid #e6e9ef;
+  background: #fff;
+}
+
+.per-n {
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid #e6e9ef;
+}
+
+
+/* Layout: left form, right results */
+.layout-grid {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 20px;
+  align-items: start;
+}
+
+/* On small screens stack and enable sticky results */
+@media (max-width: 900px) {
+  .layout-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .results-panel {
+    order: 2;
+  }
+
+  /* results appear after form, but we use sticky for visibility */
+}
+
+/* Results panel styling */
+.results-panel {
+  position: relative;
+}
+
+.results-panel .card-sub {
+  position: sticky;
+  top: 20px;
+}
+
+/* Mobile sticky summary */
+.sticky-results {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  z-index: 9999;
+  background: linear-gradient(180deg, #ffffff, #f7fff9);
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(10, 30, 10, 0.12);
+  padding: 8px;
+  border: 1px solid rgba(20, 100, 60, 0.06);
+  display: none;
+  /* shown only on small screens */
+}
+
+.sticky-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.sticky-value {
+  font-weight: 700;
+}
+
+.sticky-expanded {
+  margin-top: 8px;
+  font-size: 0.95rem;
+  color: #164d2b;
+  max-height: 400px;
+  overflow: auto;
+  padding-right: 6px;
+}
+
+/* ensure rec-list inside sticky is legible */
+.sticky-expanded .rec-list li {
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+/* small devices: increase touch area */
+@media (max-width: 480px) {
+  .sticky-summary {
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .sticky-value {
+    font-size: 14px;
+  }
+
+  .btn.small {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+}
+
+/* show sticky on small screens */
+@media (max-width: 900px) {
+  .sticky-results {
+    display: block;
+  }
+
+  /* hide desktop results-card to avoid duplication */
+  .results-panel .card-sub {
+    display: none;
+  }
+
+  /* Add dynamic bottom padding to form when sticky is visible */
+  .form-col {
+    padding-bottom: 340px;
+    /* space for sticky results + some margin */
+  }
+
+  .grid {
+    margin-bottom: 20px;
+    /* extra breathing room at the bottom of inputs */
+  }
+}
+
+@media (max-width: 600px) {
+  .form-col {
+    padding-bottom: 380px;
+    /* more space on smaller screens due to taller sticky panel */
+  }
+}
+
+@media (max-width: 480px) {
+  .form-col {
+    padding-bottom: 400px;
+    /* maximum space on very small screens */
+  }
+
+  .sticky-summary {
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .sticky-value {
+    font-size: 14px;
+  }
+
+  .btn.small {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+}
+
+/* Ensure no mobile sticky padding affects larger screens */
+@media (min-width: 901px) {
+  .form-col {
+    padding-bottom: 0 !important;
+  }
+}
+
+/* small button */
+.btn.small {
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: #28a745;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+/* Material-Level Insights */
+#materialChart {
+  display: block;
+  margin: 12px auto;
+  border-radius: 8px;
+  width: 100%;
+}
+
+#insightsText {
+  font-size: 0.9rem;
+  color: #0b1220;
+  line-height: 1.6;
+  margin-top: 8px;
+}
+
+#insightsText strong {
+  color: #d97706;
+  font-weight: 700;
+}
+
+#insightsText div {
+  margin-bottom: 6px;
+}
+
+/* Remove old insights h4 styling */
+.insights h4 {
+  display: none;
+}
+
+.insights h4::before {
+  display: none;
+}
+
+#stickyMaterialChart {
+  display: block;
+  margin: 8px auto;
+  border-radius: 6px;
+  width: 100%;
+}

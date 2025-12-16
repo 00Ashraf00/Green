@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sustainable Materials Selector</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Rubik:wght@500;700&display=swap"
+      rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+
+  <body>
+    <!-- Header Section -->
+    <header class="header">
+      <div class="header-content">
+        <a href="sustain.html" class="brand" title="Home">
+          <!-- <img src="/sustain/assets/images/logo.png" alt="Sustain Logo" class="site-logo"> -->
+          <span>Sustainable Materials Selector</span>
+        </a>
+        <div class="search-container">
+          <input type="text" id="searchBar" class="search-bar" placeholder="🔍 Search Materials…">
+          <ul id="searchResults" class="search-results"></ul>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+      <!-- Category Selector with Toggle -->
+      <section class="category-section">
+        <button class="category-toggle-btn" id="categoryToggle">
+          Select Category
+          <svg class="toggle-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path fill-rule="evenodd"
+              d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm4.28 10.28a.75.75 0 000-1.06l-3-3a.75.75 0 10-1.06 1.06l1.72 1.72H8.25a.75.75 0 000 1.5h5.69l-1.72 1.72a.75.75 0 101.06 1.06l3-3z"
+              clip-rule="evenodd"></path>
+          </svg>
+        </button>
+        <div class="category-grid" id="categoryGrid"></div>
+      </section>
+
+      <!-- Material List & Comparison -->
+      <div class="content-wrapper">
+        <!-- Left Sidebar: Material List -->
+        <aside class="material-list-sidebar">
+          <ul id="materialList" class="material-list"></ul>
+        </aside>
+
+        <!-- Main Panel: Comparison -->
+        <main class="comparison-panel">
+          <div id="comparisonContent" class="comparison-placeholder">
+            <p>Select a material to compare traditional vs sustainable alternatives</p>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+  </body>
+
+</html>

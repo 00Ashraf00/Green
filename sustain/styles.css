@@ -1,0 +1,1584 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-green: #2ecc71;
+  --dark-green: #27ae60;
+  --light-gray: #f5f5f5;
+  --dark-text: #2c3e50;
+  --border-color: #ecf0f1;
+  --red: #e74c3c;
+  --comparison-offset: 140px;
+  /* قيمة افتراضية: header + فراغات */
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--light-gray);
+  color: var(--dark-text);
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+/* Header — أصغر أشيك، مركزي، حد أدنى من النص */
+.header {
+  background: linear-gradient(90deg, #0b3d2e 0%, #0f5e3f 100%);
+  color: #ffffff;
+  padding: 12px 14px;
+  text-align: center;
+  border-bottom: 3px solid rgba(255, 255, 255, 0.06);
+}
+
+.header-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.header-content h1 {
+  font-family: 'Rubik', 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  font-size: 1.05rem;
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.header-content p {
+  display: none;
+  /* إخفاء السطر الوصفي لجعل الهيدر أنحف */
+}
+
+/* Search داخل الهيدر — أصغر وخفيف */
+.search-container {
+  max-width: 360px;
+  width: 40%;
+  margin: 0;
+  position: relative;
+  padding-right: 50px;
+  /* مهم: يربط صندوق النتائج بمكان البحث */
+}
+
+.search-bar {
+  width: 100%;
+  padding: 8px 50px;
+  font-size: 0.9rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+}
+
+/* نتائج البحث - تظهر كخانات/أزرار */
+.search-results {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  /* خلفية صلبة لتباين جيد */
+  color: #111;
+  list-style: none;
+  margin: 0;
+  padding: 8px;
+  border-radius: 8px;
+  max-height: 320px;
+  overflow-y: auto;
+  display: none;
+  z-index: 10000;
+  /* فوق كل العناصر */
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* لو فيه نتائج أو JS ضاف الكلاس active — أجبِرها تظهر */
+.search-results.active {
+  display: block !important;
+  visibility: visible !important;
+  pointer-events: auto;
+}
+
+/* تظهر كـ "خيارات" زرّية بدل نص أبيض مختفي */
+.search-results.active {
+  display: block;
+}
+
+.search-results li {
+  display: block;
+  width: 100%;
+  margin: 6px 0;
+  padding: 8px 10px;
+  background: #f7f7f8;
+  color: #0b0b0b;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease, transform 60ms ease;
+  font-size: 0.95rem;
+}
+
+/* اجعل الجزء القوي (الاسم) بارز والـ category أغمق */
+.search-results li strong {
+  color: #0b3d2e;
+}
+
+.search-results li small {
+  color: #6b6b6b;
+  margin-left: 8px;
+  font-weight: 500;
+}
+
+/* تأثير عند المرور والضغط مثل زر */
+.search-results li:hover {
+  background: #e8fff0;
+  border-color: #0b8a4a;
+  transform: translateY(-1px);
+}
+
+.search-results li:active {
+  transform: translateY(0);
+}
+
+/* ضمان ظهور فوق كل العناصر */
+@media (max-width: 768px) {
+  .search-results {
+    max-height: 38vh;
+    padding: 6px;
+  }
+
+  .search-results li {
+    padding: 7px 8px;
+    font-size: 0.92rem;
+  }
+}
+
+/* تباعد أقوى على الشاشات الكبيرة */
+@media (min-width: 1200px) {
+  .container {
+    padding: 40px 30px;
+  }
+
+  .comparison-cards {
+    gap: 36px;
+  }
+}
+
+/* تحسين الاستجابة: شاشات صغيرة أكثر سلاسة */
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .header-content h1 {
+    font-size: 1rem;
+  }
+
+  .search-container {
+    width: 48%;
+    max-width: 260px;
+  }
+
+  .search-bar {
+    padding: 7px 8px;
+    font-size: 0.88rem;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 6px;
+  }
+
+  .comparison-cards {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .card-image {
+    height: 56px;
+    font-size: 1.4rem;
+  }
+
+  .material-list-sidebar {
+    display: none;
+  }
+
+  /* لإظهار المحتوى أولاً على الموبايل */
+}
+
+/* Responsive layout for screens narrower than 878px */
+@media (max-width: 878px) {
+
+  /* Make header compact and keep search small */
+  .header {
+    padding: 10px 12px;
+  }
+
+  .header-content {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .header-content h1 {
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  .search-container {
+    width: 46%;
+    max-width: 260px;
+  }
+
+  .search-bar {
+    padding: 7px 8px;
+    font-size: 0.9rem;
+  }
+
+  /* Convert category grid into a horizontal scroller */
+  .category-grid {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 6px;
+  }
+
+  .category-grid::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .category-grid::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.12);
+    border-radius: 6px;
+  }
+
+  .category-btn {
+    flex: 0 0 auto;
+    min-width: 120px;
+    padding: 8px 10px;
+    font-size: 0.9rem;
+  }
+
+  /* Stack content: material list above comparison panel */
+  .content-wrapper {
+    display: block;
+  }
+
+  /* Make material list visible and horizontal on mobile */
+  .material-list-sidebar {
+    display: block;
+    position: relative;
+    border: none;
+    padding: 8px 0 6px 0;
+    margin-bottom: 8px;
+    background: transparent;
+    max-width: 100%;
+    overflow: visible;
+  }
+
+  .material-list {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .material-list li {
+    flex: 0 0 auto;
+    padding: 8px 10px;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 8px;
+    font-size: 0.92rem;
+    white-space: nowrap;
+  }
+
+  /* Comparison panel becomes full width and compact */
+  .comparison-panel {
+    padding: 10px;
+  }
+
+  .comparison-cards {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .material-card {
+    padding: 10px;
+    border-radius: 8px;
+  }
+
+  .card-image {
+    height: 64px;
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+  }
+
+  /* Impact summary compact and wrap to two columns if needed */
+  .impact-summary {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 10px;
+    gap: 8px;
+  }
+
+  /* Reduce vertical spacing to show more content at once */
+  .material-title {
+    font-size: 1.05rem;
+    margin-bottom: 12px;
+  }
+
+  .info-row {
+    padding: 6px 0;
+    font-size: 0.9rem;
+  }
+
+  /* Ensure search results overlay properly on mobile */
+  .search-container {
+    position: relative;
+  }
+
+  .search-results {
+    left: 6px;
+    right: 6px;
+    top: calc(100% + 6px);
+    max-height: 38vh;
+    border-radius: 8px;
+  }
+
+  /* Small tweaks: icons and badges */
+  .impact-icon {
+    font-size: 0.95rem;
+  }
+
+  .cert-badge {
+    padding: 4px 8px;
+    font-size: 0.75rem;
+  }
+
+  /* Keep important elements tappable */
+  .category-btn,
+  .material-list li,
+  .search-results li {
+    touch-action: manipulation;
+  }
+
+  /* If header still takes too much space, hide subtitle entirely */
+  .header-content p {
+    display: none;
+  }
+}
+
+/* تصغير أيقونات عامة في البطاقات والقوائم */
+.card-image {
+  height: 64px;
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+}
+
+.impact-icon {
+  font-size: 1rem;
+}
+
+/* أزرار الفئات أصغر لتظهر المزيد في نفس السطر */
+.category-grid {
+  gap: 8px;
+}
+
+.category-btn {
+  padding: 8px 10px;
+  font-size: 0.85rem;
+  border-radius: 8px;
+}
+
+/* قائمة المواد - أضيق لتظهر عدد أكبر */
+.material-list-sidebar {
+  padding: 10px;
+  max-height: calc(80vh - 140px);
+  overflow-y: auto;
+}
+
+.material-list li {
+  padding: 6px 8px;
+  font-size: 0.9rem;
+}
+
+/* تصغير البطاقات (المقارنة) قليلًا لتري كل المحتوى ضمن الشاشة */
+.comparison-panel {
+  padding: 12px;
+}
+
+.comparison-cards {
+  gap: 12px;
+}
+
+/* تأثير بصري خفيف للوضوح بدون أن يملأ المساحة */
+.material-card {
+  padding: 12px;
+  border-radius: 8px;
+}
+
+/* Container & Layout */
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+.category-section {
+  margin-bottom: 12px;
+}
+
+.category-section h2 {
+  margin-bottom: 20px;
+  color: var(--dark-green);
+  font-size: 1.8em;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.category-btn {
+  padding: 10px 12px;
+  border: 2px solid var(--border-color);
+  background: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.3s;
+  color: var(--dark-text);
+}
+
+.category-btn:hover {
+  border-color: var(--primary-green);
+  background-color: #f0fdf4;
+}
+
+.category-btn.active {
+  background-color: var(--primary-green);
+  color: white;
+  border-color: var(--primary-green);
+}
+
+/* Content Wrapper */
+.content-wrapper {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+/* Material List Sidebar */
+.material-list-sidebar {
+  background: white;
+  padding: 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  height: fit-content;
+  position: sticky;
+  top: 20px;
+  margin-bottom: 0;
+}
+
+.material-list-sidebar h3 {
+  color: var(--dark-green);
+  margin-bottom: 15px;
+  font-size: 1.2em;
+}
+
+.material-list {
+  list-style: none;
+}
+
+/* اجعل قائمة المواد تلتف وتترتب عمودياً عند المساحات الضيقة */
+.material-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  overflow-x: visible;
+  padding: 4px;
+}
+
+/* عناصر القائمة تصبح مرنة: عمودين على الموبايل، صف واحد على الشاشات الأكبر */
+.material-list li {
+  flex: 0 0 calc(50% - 2px);
+  min-width: 120px;
+  box-sizing: border-box;
+}
+
+/* عند الشاشات الأضيق جدًا اجعلها صف واحد (تحت بعض) */
+@media (max-width: 480px) {
+  .material-list li {
+    flex: 0 0 100%;
+  }
+}
+
+/* لو تريد سلوك أفقى (scroll) في فئة معينة لاحقًا، ممكن إضافة class خاص وتغيير overflow */
+
+/* Comparison Panel */
+.comparison-panel {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  min-height: calc(100vh - var(--comparison-offset));
+  display: block;
+  box-sizing: border-box;
+}
+
+/* عندما تحتوي اللوحة على العنصر الوصفي الافتراضي (قبل اختيار أي category),
+   إجعلها تملأ الارتفاع المتبقي ووسّط المحتوى عموديًا وأفقيًا.
+   نستخدم :has() للتطبيق فقط في الحالة المطلوبة; المتصفحات غير الداعمة
+   ستعتمد على القاعدة الاحتياطية أعلاه. */
+.comparison-panel:has(.comparison-placeholder) {
+  min-height: calc(100vh - var(--comparison-offset));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 20px;
+  /* مساحة صغيرة فوق المحتوى */
+  padding-bottom: 20px;
+}
+
+/* تأكد أن المحتوى الوصفي يلتف ويتوسّط */
+.comparison-placeholder {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* Comparison content and cards — larger, more breathable */
+.comparison-content {
+  animation: fadeIn 0.25s ease-in;
+  font-size: 1.05rem;
+  /* زيادة نص المحتوى */
+}
+
+.material-title {
+  font-size: 1.25rem;
+  color: var(--dark-green);
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+/* أكبر بطاقات المقارنة */
+.comparison-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.material-card {
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  padding: 14px;
+  transition: all 0.25s;
+}
+
+.material-card:hover {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.material-card.traditional {
+  border-left: 5px solid var(--red);
+}
+
+.material-card.sustainable {
+  border-left: 5px solid var(--primary-green);
+  background-color: #f0fdf4;
+}
+
+.card-header {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.card-header.traditional {
+  color: var(--red);
+}
+
+.card-header.sustainable {
+  color: var(--dark-green);
+}
+
+.card-header span {
+  margin-right: 8px;
+  font-size: 1.2em;
+}
+
+.card-image {
+  width: 100%;
+  height: 120px;
+  background: var(--light-gray);
+  border-radius: 6px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  /* أيقونات أصغر */
+  color: #bdc3c7;
+}
+
+.card-info {
+  font-size: 0.95em;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  font-weight: 600;
+  color: var(--dark-text);
+}
+
+.info-value {
+  color: #34495e;
+  text-align: right;
+}
+
+/* Impact Summary */
+.impact-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 10px;
+  margin: 30px 0;
+  padding: 12px;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.impact-card {
+  background: white;
+  padding: 10px;
+  border-radius: 6px;
+  text-align: center;
+  border-left: 4px solid var(--primary-green);
+}
+
+.impact-icon {
+  font-size: 1.2em;
+  margin-bottom: 6px;
+}
+
+.impact-label {
+  font-size: 0.85em;
+  color: #7f8c8d;
+  margin-bottom: 5px;
+}
+
+.impact-value {
+  font-size: 1.1em;
+  font-weight: 700;
+  color: var(--dark-green);
+}
+
+.impact-card.negative {
+  border-left-color: var(--red);
+}
+
+.impact-card.negative .impact-value {
+  color: var(--red);
+}
+
+/* Action Button */
+.action-button-container {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.add-btn {
+  background-color: var(--primary-green);
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  font-size: 1.05em;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 2px 8px rgba(46, 204, 113, 0.3);
+}
+
+.add-btn:hover {
+  background-color: var(--dark-green);
+  box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4);
+}
+
+/* تحسين اللمسات البصرية: ظل خفيف، زوايا أنعم */
+.material-card {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+}
+
+.category-btn {
+  transition: transform 120ms ease;
+}
+
+/* Ensure no horizontal scroll globally */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Force mobile layout under 878px: stack sidebar above comparison and remove sticky/side spacing */
+@media (max-width: 878px) {
+  .container {
+    padding: 10px;
+    max-width: 100%;
+  }
+
+  /* Make content stack vertically */
+  .content-wrapper {
+    display: block !important;
+    margin: 0;
+    gap: 8px;
+  }
+
+  /* Material list becomes a full-width horizontal scroller above the comparison */
+  .material-list-sidebar {
+    display: block !important;
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    padding: 6px 0;
+    margin: 0 0 8px 0;
+    border: none;
+    background: transparent;
+    top: auto;
+    left: auto;
+    box-shadow: none;
+  }
+
+  .material-list {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 6px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .material-list li {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 0.92rem;
+  }
+
+  /* Make comparison panel take full width and not cause horizontal overflow */
+  .comparison-panel {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .comparison-cards {
+    grid-template-columns: 1fr !important;
+    gap: 10px;
+    min-width: 0;
+    /* prevent children from forcing horizontal scroll */
+  }
+
+  .material-card {
+    width: 100%;
+    min-width: 0;
+    padding: 10px;
+  }
+
+  .card-image {
+    height: 64px;
+    font-size: 1.4rem;
+  }
+
+  /* Reduce side paddings that cause horizontal space */
+  .category-grid {
+    padding: 6px 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .header-content {
+    padding: 6px 8px;
+  }
+
+  /* Ensure search results overlay correctly */
+  .search-container {
+    position: relative;
+    z-index: 12000;
+  }
+
+  .search-results {
+    left: 6px;
+    right: 6px;
+    top: calc(100% + 6px);
+    max-height: 40vh;
+  }
+}
+
+/* material list items interaction */
+.material-list li {
+  cursor: pointer;
+  /* مؤشر واضح */
+  user-select: none;
+  transition: background 120ms ease, transform 100ms ease, border-color 120ms ease;
+  background: #ffffff;
+  /* اجعلها مرئية فوق الخلفية */
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 8px 10px;
+}
+
+/* hover + focus (keyboard) */
+.material-list li:hover,
+.material-list li:focus {
+  background: #e9fff2;
+  border-left-color: var(--primary-accent, #0b8a4a);
+  transform: translateY(-3px);
+  outline: none;
+}
+
+/* الحالة النشطة بعد الاختيار */
+.material-list li.active {
+  background: var(--primary-accent, #0b8a4a);
+  color: #ffffff;
+  border-left-color: rgba(0, 0, 0, 0);
+  transform: none;
+}
+
+/* تحسّن إمكانية اللمس على موبايل */
+@media (hover: none) {
+  .material-list li:hover {
+    transform: none;
+  }
+}
+
+/* Comparison cards as two columns: left traditional, right stacked alternatives */
+.comparison-cards {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  /* main content on left, alternatives column on right */
+  gap: 24px;
+  align-items: start;
+}
+
+/* Left column (traditional) */
+/* .left-column {} */
+
+/* Right column wrapper */
+.right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.alternatives-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #0b8a4a;
+  padding-bottom: 6px;
+}
+
+/* Card styles distinction */
+.material-card.traditional {
+  border: 2px solid #e74c3c;
+  /* red border */
+  background: #fff6f6;
+}
+
+.material-card.sustainable {
+  border: 2px solid #2ecc71;
+  /* green border */
+  background: #f2fff6;
+}
+
+/* Smaller stacked alternative items */
+.alternatives-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.alt-item {
+  padding: 10px;
+  border-radius: 8px;
+}
+
+/* Make sure traditional card fills left column width */
+.left-column .material-card.traditional {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Responsive: stack into single column on small screens */
+@media (max-width: 878px) {
+  .comparison-cards {
+    grid-template-columns: 1fr;
+    /* stack vertically */
+  }
+
+  .right-column {
+    order: 2;
+  }
+
+  .left-column {
+    order: 1;
+  }
+
+  .alternatives-title {
+    color: #0b8a4a;
+  }
+
+  .comparison-cards {
+    gap: 12px;
+  }
+}
+
+/* Small polish: consistent padding inside cards */
+.material-card .card-info {
+  gap: 6px;
+}
+
+.info-row {
+  padding: 6px 0;
+}
+
+/* Make material list appear above the comparison panel on large screens too,
+   while keeping comparison-cards layout (traditional beside sustainable). */
+.content-wrapper {
+  display: block !important;
+  /* stack sidebar above comparison everywhere */
+  gap: 12px;
+}
+
+/* Sidebar full-width strip above comparison */
+.material-list-sidebar {
+  width: 100% !important;
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  margin: 0 0 12px 0;
+  border: none;
+  padding: 6px 4px;
+  background: transparent;
+  box-shadow: none;
+}
+
+/* Material list: horizontal scroller so it doesn't force layout */
+.material-list {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 6px;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Keep each item readable */
+.material-list li {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  margin-bottom: 0;
+}
+
+/* Ensure comparison panel is full width and cards layout stays two-column on large screens */
+.comparison-panel {
+  width: 100% !important;
+  box-sizing: border-box;
+  padding: 12px;
+}
+
+/* Maintain two-column comparison on larger screens */
+@media (min-width: 879px) {
+  .comparison-cards {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    /* left: traditional, right: alternatives */
+    gap: 24px;
+    align-items: start;
+    min-width: 0;
+  }
+}
+
+/* On small screens keep stacking (single column) */
+@media (max-width: 878px) {
+  .comparison-cards {
+    grid-template-columns: 1fr !important;
+    gap: 12px;
+  }
+}
+
+/* Ensure the toggle and its dropdown are centered and the dropdown doesn't overflow on narrow screens */
+.category-section {
+  /* keep relative positioning (parent of the absolute dropdown) and center contents */
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Target the dropdown by id used in the HTML (#categoryGrid) */
+#categoryGrid {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  transform: none;
+  width: 100%;
+  max-width: 100vw;
+  box-sizing: border-box;
+  padding: 10px;
+  border-radius: 8px;
+  background: #fff;
+  border: 2px solid #0b8a4a;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  z-index: 1200;
+  display: none;
+  overflow-y: auto;
+  max-height: 60vh;
+}
+
+/* When JS adds .active, ensure it displays as grid and still centered */
+#categoryGrid.active {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 8px;
+  width: 100%;
+  max-width: 100vw;
+}
+
+/* Smaller screens: allow slightly larger relative width but keep margins */
+@media (max-width: 440px) {
+  #categoryGrid {
+    width: 100vw;
+    min-width: 220px;
+    left: 0;
+    transform: none;
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+
+  #categoryGrid.active {
+    width: 100vw;
+  }
+}
+
+/* Defensive: ensure the toggle button stays centered */
+.category-toggle-btn {
+  display: inline-block;
+  margin: 0 auto;
+}
+
+/* Responsive: scale down category buttons on narrower viewports */
+.category-btn {
+  /* Ensure a baseline min-height for touch targets and a reasonable min-width on large screens */
+  min-height: 44px;
+  min-width: 140px;
+  padding: 10px 12px;
+  /* desktop comfortable padding */
+  font-size: 0.95rem;
+  /* desktop font size */
+  box-sizing: border-box;
+}
+
+/* Medium-large screens: slightly smaller buttons */
+@media (max-width: 1200px) {
+  .category-btn {
+    min-width: 130px;
+    padding: 9px 11px;
+    font-size: 0.92rem;
+  }
+}
+
+/* Tablet / small laptop */
+@media (max-width: 900px) {
+  .category-btn {
+    min-width: 110px;
+    padding: 8px 10px;
+    font-size: 0.88rem;
+  }
+}
+
+/* Large phones / phablets */
+@media (max-width: 600px) {
+  .category-btn {
+    min-width: 96px;
+    padding: 7px 9px;
+    font-size: 0.84rem;
+    border-radius: 10px;
+  }
+}
+
+/* Small phones: compact but still tappable */
+@media (max-width: 420px) {
+  .category-btn {
+    min-width: 80px;
+    padding: 6px 8px;
+    font-size: 0.78rem;
+  }
+}
+
+/* For horizontal-scroller layout ensure buttons don't force large gaps */
+.category-grid,
+#categoryGrid.active {
+  gap: clamp(6px, 1.2vw, 12px);
+}
+
+/* Make category buttons always fill full width and center text even if it wraps */
+@media (max-width: 444px) {
+  .category-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    overflow-x: visible;
+  }
+
+  .category-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 100% !important;
+    padding: 6px 8px;
+    font-size: 0.7rem;
+    text-align: center;
+    white-space: normal;
+    word-break: break-word;
+    word-wrap: break-word;
+    line-height: 1.2;
+    min-height: 36px;
+    max-height: 48px;
+    border-radius: 6px;
+  }
+
+  #categoryGrid {
+    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 6px;
+    max-height: 65vh;
+  }
+
+  #categoryGrid.active {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+}
+
+
+
+/* Force material list to center items horizontally on all categories */
+.material-list {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 4px !important;
+  padding: 4px !important;
+  overflow-x: visible !important;
+}
+
+/* improved item card */
+.material-list li {
+  flex: 0 0 auto !important;
+  margin: 2px !important;
+  padding: 10px 14px !important;
+  box-sizing: border-box !important;
+  white-space: nowrap;
+  min-width: 120px;
+  max-width: 220px;
+  text-align: center;
+  font-weight: 600;
+  color: #0b3d2e;
+  background: linear-gradient(180deg, #ffffff 0%, #f4fff6 100%);
+  border: 1px solid rgba(11, 138, 74, 0.12);
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 1px solid rgba(11, 138, 74, 0.12);
+  border-bottom: 1px solid rgba(11, 138, 74, 0.12);
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(11, 138, 74, 0.06);
+  transition: transform .12s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* hover & focus effect: green line both sides */
+.material-list li:hover,
+.material-list li:focus {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(11, 138, 74, 0.14);
+  background: linear-gradient(180deg, #effff2 0%, #e0fff0 100%);
+  outline: none;
+  border-left-color: #0b8a4a;
+  /* left green line */
+  border-right-color: #0b8a4a;
+  /* right green line */
+  border-top-color: rgba(11, 138, 74, 0.12);
+  border-bottom-color: rgba(11, 138, 74, 0.12);
+}
+
+/* active style */
+.material-list li.active {
+  background: #0b8a4a;
+  /* أخضر واضح للحالة النشطة */
+  color: #fff;
+  box-shadow: 0 8px 22px rgba(11, 138, 74, 0.18);
+  transform: none;
+  /* keep active appearance clean by making side borders either white-transparent or matching bg */
+  border-left-color: rgba(11, 138, 74, 0.0);
+  border-right-color: rgba(11, 138, 74, 0.0);
+}
+
+/* small screens: عرض أصغر وبطاقتين جنب بعض إذا في مساحة */
+@media (max-width: 878px) {
+
+  /* keep comparison behavior (existing rules remain) */
+  .comparison-cards {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .left-column {
+    order: 1;
+  }
+
+  .right-column {
+    order: 2;
+  }
+
+  .left-column .material-card.traditional {
+    min-width: 100%;
+    margin: 0 auto;
+  }
+
+  .alternatives-list .material-card.sustainable {
+    width: 100%;
+  }
+
+  /* NEW: make material-list items smaller and allow 2-per-row */
+  .material-list {
+    justify-content: center !important;
+  }
+
+  .material-list li {
+    /* allow two items per row with small gap */
+    flex: 0 0 calc(50% - 12px) !important;
+    padding: 8px 10px !important;
+    font-size: 0.92rem;
+    white-space: normal;
+    text-align: center;
+    box-sizing: border-box;
+  }
+}
+
+/* very small screens: single column for touch friendliness */
+@media (max-width: 420px) {
+  .material-list li {
+    flex: 0 0 92% !important;
+    max-width: 92%;
+    padding: 10px 12px !important;
+    font-size: 0.95rem;
+  }
+}
+
+
+
+
+@media (max-width: 532px) {
+  .material-list li {
+    flex: 0 0 92% !important;
+    max-width: 40%;
+    padding: 10px 12px !important;
+    font-size: 0.95rem;
+  }
+}
+
+/* Comparison layout: traditional (red) minimal width, alternatives (green) take remaining space */
+.comparison-cards {
+  display: grid;
+  grid-template-columns: minmax(220px, 320px) 1fr;
+  /* left = small, right = flexible */
+  gap: 24px;
+  align-items: start;
+  min-width: 0;
+  /* prevent children forcing horizontal scroll */
+}
+
+/* Ensure traditional card is constrained to the left column */
+.left-column .material-card.traditional {
+  max-width: 360px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Right column should fill remaining space */
+.right-column {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Make each alternative fill the column nicely */
+.alternatives-list .material-card.sustainable {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* RESPONSIVE: when viewport is narrow, stack cards and show traditional (red) first,
+               making traditional appear above alternatives on small screens */
+@media (max-width: 878px) {
+  .comparison-cards {
+    grid-template-columns: 1fr;
+    /* stack vertically */
+    gap: 12px;
+  }
+
+  /* show traditional first on mobile */
+  .left-column {
+    order: 1;
+  }
+
+  .right-column {
+    order: 2;
+  }
+
+  /* traditional card becomes compact and centered */
+  .left-column .material-card.traditional {
+    max-width: 280px;
+    width: auto;
+    margin: 0 auto;
+  }
+
+  /* alternatives become full width when stacked */
+  .alternatives-list .material-card.sustainable {
+    width: 100%;
+  }
+}
+
+/* safety: prevent horizontal overflow caused by card contents */
+.comparison-panel,
+.comparison-cards,
+.material-card {
+  min-width: 0;
+}
+
+/* Very small screens: category buttons take 45% width of parent */
+@media (max-width: 440px) {
+  .category-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .category-btn {
+    flex: 0 0 45%;
+    max-width: 45%;
+    padding: 8px 10px;
+    font-size: 0.85rem;
+    box-sizing: border-box;
+  }
+}
+
+/* Category dropdown styles */
+.category-section {
+  position: relative;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Modern enhanced category toggle button */
+.category-toggle-btn {
+  position: relative;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  padding: 0.5rem 1.25rem;
+  background-color: #0b8a4a;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  gap: 10px;
+  font-weight: 700;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  outline: none;
+  overflow: hidden;
+  font-size: 1.1rem;
+  cursor: pointer;
+  margin: 0 auto 12px;
+}
+
+.toggle-icon {
+  width: 24px;
+  height: 24px;
+  transition: all 0.3s ease-in-out;
+}
+
+.category-toggle-btn:hover {
+  transform: scale(1.05);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.category-toggle-btn:hover .toggle-icon {
+  transform: translate(4px);
+}
+
+.category-toggle-btn:hover::before {
+  animation: shine 1.5s ease-out infinite;
+}
+
+.category-toggle-btn::before {
+  content: "";
+  position: absolute;
+  width: 100px;
+  height: 100%;
+  background-image: linear-gradient(120deg,
+      rgba(255, 255, 255, 0) 30%,
+      rgba(255, 255, 255, 0.8),
+      rgba(255, 255, 255, 0) 70%);
+  top: 0;
+  left: -100px;
+  opacity: 0.6;
+}
+
+@keyframes shine {
+  0% {
+    left: -100px;
+  }
+
+  60% {
+    left: 100%;
+  }
+
+  to {
+    left: 100%;
+  }
+}
+
+.category-toggle-btn:active {
+  transform: scale(0.98);
+}
+
+/* brand (logo + title) in header */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.site-logo {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 6px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+/* ensure header text inside the brand is visible on dark header */
+.header .brand span {
+  color: #fff;
+  font-family: 'Rubik', 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  font-weight: 700;
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+/* subtle hover for the brand */
+.brand:hover {
+  transform: translateY(-2px);
+  transition: transform 120ms ease;
+}
+
+/* make brand responsive on very small screens */
+@media (max-width: 500px) {
+  .site-logo {
+    width: 36px;
+    height: 36px;
+    padding: 4px;
+  }
+
+  .header .brand span {
+    font-size: 0.95rem;
+    display: none;
+  }
+}
+
+/* Override: on narrower screens place search immediately to the left of the logo (do not shrink it) */
+@media (max-width: 878px) {
+  .header-content {
+    /* اجعل محتويات الهيدر تبدأ من اليسار بدلاً من التوزيع space-between */
+    justify-content: flex-start;
+    gap: 10px;
+    align-items: center;
+  }
+
+  /* تأكد أن الشعار يبقى أول عنصر */
+  .brand {
+    order: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* ضع صندوق البحث مباشرة بعد الشعار بدلاً من تقليصه أو اختفائه */
+  .search-container {
+    order: 1;
+    margin-left: 8px;
+    width: auto;
+    max-width: calc(100% - 140px);
+    /* يترك مساحة كافية للشعار والهوامش */
+    flex: 0 0 auto;
+    padding-right: 0;
+    /* نتجنب ضغط المساحة اليمنى */
+  }
+
+  /* حافظ على حجم البحث عملياً عبر clamp لمنعه من الانكماش الزائد */
+  .search-bar {
+    width: clamp(160px, 40vw, 360px);
+    min-width: 140px;
+    box-sizing: border-box;
+  }
+
+  /* اجعل صندوق النتائج يتماشى مع موقع الإدخال عند الشاشات الضيقة */
+  .search-results {
+    left: 0;
+    right: auto;
+    width: auto;
+    max-width: calc(100vw - 24px);
+    box-sizing: border-box;
+  }
+}
